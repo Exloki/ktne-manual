@@ -1,5 +1,199 @@
-.table {
+.table_simplewires {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 2px solid #333;
+}
+
+.table_simplewires td {
+    vertical-align: top;
+    padding: 5px;
+    width: 50%;
+    border: 2px solid #333;
+}
+
+.table_simplewires th {
+    border: 2px solid #333;
+}
+
+.table_simplewires ul {
+    padding-left: 20px;
+    margin: 5px 0;
+}
+
+.table_simplewires li {
+    padding: 3px 0;
+    border-radius: 3px;
+    line-height: 1.4;
+    /* Apply padding to all list items to prevent shifts when highlighting */
+    padding: 3px 5px;
+    margin: 2px 0;
+}
+
+/* Color spans */
+.red {
+    color: #ff0000;
+}
+
+.blue {
+    color: #0000ff;
+}
+
+.yellow {
+    color: #cccc00;
+}
+
+.white {
+    color: #aaaaaa;
+}
+
+.black {
+    color: #000000;
+}
+
+/* Active and highlighted rules */
+.active-rule {
+    background-color: #f0f0f0;
+    padding: 5px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0;
+}
+
+h4 {
+    margin: 8px 0;
+    padding: 5px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+}
+
+.highlighted-rule {
+    background-color: #ffffcc;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+/* Wire display */
+.wire-display {
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    height: 100px; /* Fixed height to fit 6 wires */
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    gap: 8px;
+    box-sizing: border-box;
+    min-height: 90px;
+}
+
+.wire {
+    height: 8px;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.wire.red {
+    background-color: #ff0000;
+}
+
+.wire.blue {
+    background-color: #0000ff;
+}
+
+.wire.yellow {
+    background-color: #cccc00;
+}
+
+.wire.white {
+    background-color: #dddddd;
+    border: 1px solid #aaaaaa;
+}
+
+.wire.black {
+    background-color: #000000;
+}
+
+/* Wire count display */
+.wire-count {
+    margin: 10px auto;
+    width: 80%;
+    text-align: center;
+}
+
+/* Wire buttons */
+.wire-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto;
+    flex-wrap: wrap;
+    width: 80%;
+}
+
+.wire-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    margin: 0 5px;
+}
+
+.wire-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.wire-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.red-button {
+    background-color: #ff0000;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.blue-button {
+    background-color: #0000ff;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.yellow-button {
+    background-color: #cccc00;
+    color: black;
+    text-shadow: none;
+}
+
+.white-button {
+    background-color: #f0f0f0;
+    color: black;
+    text-shadow: none;
+    border: 1px solid #ccc;
+}
+
+.black-button {
+    background-color: #000000;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.reset-button {
+    background-color: #ff6666;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.wire-header {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }

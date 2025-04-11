@@ -1,5 +1,6 @@
 .App {
     text-align: center;
+    padding-right: 180px; /* Reduced padding to allow sidebar to partially overlap */
 }
 
 .logo {
@@ -106,3 +107,17 @@ body {
         color: black;
         text-decoration: none;
     }
+
+/* Media query for smaller screens */
+@media screen and (max-width: 1200px) {
+    .App {
+        padding-right: 150px; /* Reduced padding for smaller screens */
+    }
+}
+
+/* For print - remove sidebar padding */
+@media print {
+    .App {
+        padding-right: 0;
+    }
+}

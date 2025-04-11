@@ -25,10 +25,12 @@ import VennWireModule from './VennWireModule/VennWireModule';
 import WireSequenceModule from './WireSequenceModule/WireSequenceModule';
 import MorseCodeModule from './MorseCodeModule/MorseCodeModule';
 import NeedyKnobModule from './NeedyKnobModule/NeedyKnobModule';
+import Sidebar from './components/Sidebar';
 
 function App() {
     return (
         <div className="App">
+            <Sidebar />
             <div className="page page-bg-01">
                 <img className="logo" src={logo} alt="Keep Talking and Nobody Explodes" />
                 <p />
@@ -68,8 +70,6 @@ function App() {
             <div className="page page-bg-03" id="WireSequenceModule"><WireSequenceModule /></div >
             <div className="page page-bg-04" id="MorseCodeModule"><MorseCodeModule /></div >
             <div className="page page-bg-05" id="NeedyKnobModule"><NeedyKnobModule /></div >
-
-            <div className="StickBottom"><a href='#top'>Back to Top</a></div >
         </div>
     );
 }

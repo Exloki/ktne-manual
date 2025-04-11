@@ -1,23 +1,5 @@
-.grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-}
-
-.characterCount {
-    font-weight: bold;
-    padding-bottom: 10px;
-}
-
-.possibleWords {
-    padding-bottom: 10px;
-}
-
-.characterSelected {
-    font-weight: bold;
-    color: green;
-}
-
-.possibleCharacter {
-    font-weight: bold;
-    color: blue;
-}
+.keypad-drawing-canvas {
+    width: 100% !important;
+    max-width: 100%;
+    height: auto !important;
+} 
