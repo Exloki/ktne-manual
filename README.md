@@ -5,7 +5,9 @@
 This is just an improved manual for the game [Keep Talking and Nobody Explodes](https://keeptalkinggame.com/),
 the original manual can be found at https://www.bombmanual.com/
 
-The manual is hosted at https://ktanemanual.netlify.app/
+The original version of this manual is hosted at https://ktanemanual.netlify.app/
+
+This branch is hosted at https://ktne.loki.gg/
 
 Currently only has an interactive way to solve the password module.
 
