@@ -16,6 +16,9 @@ function PasswordModule() {
     const [selected3rdCharacters, setPossible3rdCharacters] = useState<Set<string>>(new Set([]));
     const [selected4thCharacters, setPossible4thCharacters] = useState<Set<string>>(new Set([]));
     const [selected5thCharacters, setPossible5thCharacters] = useState<Set<string>>(new Set([]));
+    
+    // Add state to track words filtered only by 1st column
+    const [wordsFilteredBy1stColumn, setWordsFilteredBy1stColumn] = useState(allWords);
 
     useEffect(() => {
         let filteredWords = allWords;
@@ -35,6 +38,13 @@ function PasswordModule() {
             filteredWords = filteredWords.filter(word => selected5thCharacters.has(word.charAt(4)));
         }
         setPossibleWords(filteredWords);
+        
+        // Filter words based on just the first column selection
+        let wordsFrom1stColumn = allWords;
+        if (selected1stCharacters.size > 0) {
+            wordsFrom1stColumn = allWords.filter(word => selected1stCharacters.has(word.charAt(0)));
+        }
+        setWordsFilteredBy1stColumn(wordsFrom1stColumn);
     }, [selected1stCharacters, selected2ndCharacters, selected3rdCharacters, selected4thCharacters, selected5thCharacters, allWords]);
 
     function getAllUniqueFirstCharacters(index: number): Set<string> {
@@ -47,9 +57,36 @@ function PasswordModule() {
         return new Set(firstCharacters);
     }
 
-    function getCharClass(character: string, possibleChars: Set<string>, selectedChars: Set<string>) {
-        if (selectedChars.has(character)) { return "characterSelected"; }
-        if (possibleChars.has(character)) { return "possibleCharacter"; }
+    // New function to get characters that would be possible based only on first column selection
+    function getPossibleCharactersFrom1stColumnSelection(index: number): Set<string> {
+        const characters = wordsFilteredBy1stColumn.map((string) => string.charAt(index));
+        return new Set(characters);
+    }
+
+    function getCharClass(character: string, possibleChars: Set<string>, selectedChars: Set<string>, index: number) {
+        if (selectedChars.has(character)) { 
+            return "characterSelected"; 
+        }
+        
+        if (index === 0) {
+            // First column - use standard highlighting
+            if (possibleChars.has(character)) { 
+                return "possibleCharacter"; 
+            }
+        } else {
+            // Columns 2-5
+            const possibleBasedOn1stColumn = getPossibleCharactersFrom1stColumnSelection(index);
+            
+            // If character is in current possible set (based on all selections)
+            if (possibleChars.has(character)) {
+                return "possibleCharacter";
+            } 
+            // If character is possible based on first column but not in current possible set
+            else if (possibleBasedOn1stColumn.has(character)) {
+                return "secondaryPossibleCharacter";
+            }
+        }
+        
         return "";
     }
 
@@ -98,7 +135,7 @@ function PasswordModule() {
         setPossible5thCharacters(new Set(selected5thCharacters));
     }
 
-    // New function to clear all selections
+    // Function to clear all selections
     function clearSelections() {
         setPossible1stCharacters(new Set([]));
         setPossible2ndCharacters(new Set([]));
@@ -106,11 +143,13 @@ function PasswordModule() {
         setPossible4thCharacters(new Set([]));
         setPossible5thCharacters(new Set([]));
         setPossibleWords(allWords);
+        setWordsFilteredBy1stColumn(allWords);
     }
 
     return (
         <div>
             <h3>Password</h3>
+            <p><i><span style={{ color: 'green' }}>Selected</span> | <span style={{ color: 'blue' }}>Possible (based on selection)</span> | <span style={{ color: '#FFD700' }}>Possible (based on first column)</span></i></p>
             <div className="possibleWords">
                 {possibleWords.sort((a, b) => a.localeCompare(b)).join(', ')}
             </div>
@@ -120,7 +159,7 @@ function PasswordModule() {
                     <div className="characterCount">{getUniquePossibleFirstCharacters(0).size}</div>
                     {Array.from(getAllUniqueFirstCharacters(0).values()).sort((a, b) => a.localeCompare(b)).map(x =>
                         <div key={`char-0-${x}`}
-                             className={getCharClass(x, getUniquePossibleFirstCharacters(0), selected1stCharacters)}
+                             className={getCharClass(x, getUniquePossibleFirstCharacters(0), selected1stCharacters, 0)}
                              onClick={() => updatePossible1stCharacters(x)}>
                             {x}
                         </div>
@@ -130,7 +169,7 @@ function PasswordModule() {
                     <div className="characterCount">{getUniquePossibleFirstCharacters(1).size}</div>
                     {Array.from(getAllUniqueFirstCharacters(1).values()).sort((a, b) => a.localeCompare(b)).map(x =>
                         <div key={`char-1-${x}`}
-                             className={getCharClass(x, getUniquePossibleFirstCharacters(1), selected2ndCharacters)}
+                             className={getCharClass(x, getUniquePossibleFirstCharacters(1), selected2ndCharacters, 1)}
                              onClick={() => updatePossible2ndCharacters(x)}>
                             {x}
                         </div>
@@ -140,7 +179,7 @@ function PasswordModule() {
                     <div className="characterCount">{getUniquePossibleFirstCharacters(2).size}</div>
                     {Array.from(getAllUniqueFirstCharacters(2).values()).sort((a, b) => a.localeCompare(b)).map(x =>
                         <div key={`char-2-${x}`}
-                             className={getCharClass(x, getUniquePossibleFirstCharacters(2), selected3rdCharacters)}
+                             className={getCharClass(x, getUniquePossibleFirstCharacters(2), selected3rdCharacters, 2)}
                              onClick={() => updatePossible3rdCharacters(x)}>
                             {x}
                         </div>
@@ -150,7 +189,7 @@ function PasswordModule() {
                     <div className="characterCount">{getUniquePossibleFirstCharacters(3).size}</div>
                     {Array.from(getAllUniqueFirstCharacters(3).values()).sort((a, b) => a.localeCompare(b)).map(x =>
                         <div key={`char-3-${x}`}
-                             className={getCharClass(x, getUniquePossibleFirstCharacters(3), selected4thCharacters)}
+                             className={getCharClass(x, getUniquePossibleFirstCharacters(3), selected4thCharacters, 3)}
                              onClick={() => updatePossible4thCharacters(x)}>
                             {x}
                         </div>
@@ -160,7 +199,7 @@ function PasswordModule() {
                     <div className="characterCount">{getUniquePossibleFirstCharacters(4).size}</div>
                     {Array.from(getAllUniqueFirstCharacters(4).values()).sort((a, b) => a.localeCompare(b)).map(x =>
                         <div key={`char-4-${x}`}
-                             className={getCharClass(x, getUniquePossibleFirstCharacters(4), selected5thCharacters)}
+                             className={getCharClass(x, getUniquePossibleFirstCharacters(4), selected5thCharacters, 4)}
                              onClick={() => updatePossible5thCharacters(x)}>
                             {x}
                         </div>
