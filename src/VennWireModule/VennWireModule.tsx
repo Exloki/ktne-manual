@@ -1,3 +1,4 @@
+import DrawingCanvas from '../components/DrawingCanvas/DrawingCanvas';
 import './VennWireModule.css';
 import compWires from './img/compWires.png';
 
@@ -7,7 +8,14 @@ function VennWireModule() {
   return (
       <div>
           <h3>Complicated Wires</h3>
-          <img src={compWires} width="100%" alt="Complicated Wires" />
+          <DrawingCanvas 
+            backgroundImage={compWires} 
+            strokeColor="#FF0000"
+            strokeWidth={4}
+            buttonText="Clear Pencil"
+            buttonPosition="default"
+            className="wire-drawing-canvas"
+          />
       </div>
   );
 }
