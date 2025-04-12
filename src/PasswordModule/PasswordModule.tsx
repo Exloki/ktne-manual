@@ -1,7 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useContext } from 'react';
 import './PasswordModule.css';
+import { EasyModeContext } from '../components/EasyModeToggle';
 
 function PasswordModule() {
+    // Use the existing Easy Mode context
+    const isEasyMode = useContext(EasyModeContext);
+    
     const allWords = useMemo(() => ["about", "after", "again", "below", "could",
         "every", "first", "found", "great", "house",
         "large", "learn", "never", "other", "place",
@@ -16,6 +20,13 @@ function PasswordModule() {
     const [selected3rdCharacters, setPossible3rdCharacters] = useState<Set<string>>(new Set([]));
     const [selected4thCharacters, setPossible4thCharacters] = useState<Set<string>>(new Set([]));
     const [selected5thCharacters, setPossible5thCharacters] = useState<Set<string>>(new Set([]));
+    
+    // Add state for the text inputs
+    const [input1stCharacters, setInput1stCharacters] = useState("");
+    const [input2ndCharacters, setInput2ndCharacters] = useState("");
+    const [input3rdCharacters, setInput3rdCharacters] = useState("");
+    const [input4thCharacters, setInput4thCharacters] = useState("");
+    const [input5thCharacters, setInput5thCharacters] = useState("");
     
     // Add state to track words filtered only by 1st column
     const [wordsFilteredBy1stColumn, setWordsFilteredBy1stColumn] = useState(allWords);
@@ -146,6 +157,52 @@ function PasswordModule() {
         setWordsFilteredBy1stColumn(allWords);
     }
 
+    // Function to handle input changes and update the selected characters
+    function handleInput1stChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const input = e.target.value.toLowerCase();
+        setInput1stCharacters(input);
+        const uniqueChars = new Set<string>(input.split('').filter(char => /[a-z]/.test(char)));
+        setPossible1stCharacters(uniqueChars);
+    }
+
+    function handleInput2ndChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const input = e.target.value.toLowerCase();
+        setInput2ndCharacters(input);
+        const uniqueChars = new Set<string>(input.split('').filter(char => /[a-z]/.test(char)));
+        setPossible2ndCharacters(uniqueChars);
+    }
+
+    function handleInput3rdChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const input = e.target.value.toLowerCase();
+        setInput3rdCharacters(input);
+        const uniqueChars = new Set<string>(input.split('').filter(char => /[a-z]/.test(char)));
+        setPossible3rdCharacters(uniqueChars);
+    }
+
+    function handleInput4thChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const input = e.target.value.toLowerCase();
+        setInput4thCharacters(input);
+        const uniqueChars = new Set<string>(input.split('').filter(char => /[a-z]/.test(char)));
+        setPossible4thCharacters(uniqueChars);
+    }
+
+    function handleInput5thChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const input = e.target.value.toLowerCase();
+        setInput5thCharacters(input);
+        const uniqueChars = new Set<string>(input.split('').filter(char => /[a-z]/.test(char)));
+        setPossible5thCharacters(uniqueChars);
+    }
+
+    // Function to clear all inputs
+    function clearInputs() {
+        setInput1stCharacters("");
+        setInput2ndCharacters("");
+        setInput3rdCharacters("");
+        setInput4thCharacters("");
+        setInput5thCharacters("");
+        clearSelections();
+    }
+
     return (
         <div>
             <h3>Password</h3>
@@ -207,7 +264,71 @@ function PasswordModule() {
                 </div>
             </div>
 
-            <h3 onClick={clearSelections} className="reset">RESET</h3>
+            {isEasyMode && (
+                <>
+                    <p><i>Click characters above, or type in the boxes below</i></p>
+
+                    <div className="grid">
+                        <div>
+                            <label>1st letter</label>
+                            <input 
+                                type="text" 
+                                value={input1stCharacters} 
+                                onChange={handleInput1stChange} 
+                                placeholder="e.g. abc"
+                                style={{ width: '80%', marginBottom: '10px' }}
+                            />
+                            <div>{selected1stCharacters.size > 0 ? Array.from(selected1stCharacters).join(', ') : 'N/A'}</div>
+                        </div>
+                        <div>
+                            <label>2nd letter</label>
+                            <input 
+                                type="text" 
+                                value={input2ndCharacters} 
+                                onChange={handleInput2ndChange} 
+                                placeholder="e.g. def"
+                                style={{ width: '80%', marginBottom: '10px' }}
+                            />
+                            <div>{selected2ndCharacters.size > 0 ? Array.from(selected2ndCharacters).join(', ') : 'N/A'}</div>
+                        </div>
+                        <div>
+                            <label>3rd letter</label>
+                            <input 
+                                type="text" 
+                                value={input3rdCharacters} 
+                                onChange={handleInput3rdChange} 
+                                placeholder="e.g. ghi"
+                                style={{ width: '80%', marginBottom: '10px' }}
+                            />
+                            <div>{selected3rdCharacters.size > 0 ? Array.from(selected3rdCharacters).join(', ') : 'N/A'}</div>
+                        </div>
+                        <div>
+                            <label>4th letter</label>
+                            <input 
+                                type="text" 
+                                value={input4thCharacters} 
+                                onChange={handleInput4thChange} 
+                                placeholder="e.g. jkl"
+                                style={{ width: '80%', marginBottom: '10px' }}
+                            />
+                            <div>{selected4thCharacters.size > 0 ? Array.from(selected4thCharacters).join(', ') : 'N/A'}</div>
+                        </div>
+                        <div>
+                            <label>5th letter</label>
+                            <input 
+                                type="text" 
+                                value={input5thCharacters} 
+                                onChange={handleInput5thChange} 
+                                placeholder="e.g. mno"
+                                style={{ width: '80%', marginBottom: '10px' }}
+                            />
+                            <div>{selected5thCharacters.size > 0 ? Array.from(selected5thCharacters).join(', ') : 'N/A'}</div>
+                        </div>
+                    </div>
+                </>
+            )}
+
+            <h3 onClick={clearInputs} className="reset">RESET</h3>
         </div>
     );
 }

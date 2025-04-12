@@ -21,7 +21,7 @@ const EasyModeToggle: React.FC<EasyModeToggleProps> = ({ isEasyMode, toggleEasyM
         />
         <span className="toggle-slider"></span>
       </label>
-      <div className="tooltip">Easy mode will enable near-automatic solving for Simple Wires and Morse Code</div>
+      <div className="tooltip">Easy mode will enable easier solving for Wires, Passowrds, & Morse Code</div>
     </div>
   );
 };
