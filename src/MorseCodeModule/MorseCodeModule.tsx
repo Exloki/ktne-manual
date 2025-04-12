@@ -1,9 +1,11 @@
 import './MorseCodeModule.css';
 import tableImg from './img/results.png';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { EasyModeContext } from '../components/EasyModeToggle';
 
 function MorseCodeModule() {
     const [morseInput, setMorseInput] = useState('');
+    const isEasyMode = useContext(EasyModeContext);
     
     // Table data for easier matching
     const morseData = [
@@ -42,6 +44,9 @@ function MorseCodeModule() {
     };
 
     const isRowMatching = (rowMorse: string): boolean => {
+        // If Easy Mode is off, don't highlight any rows
+        if (!isEasyMode) return false;
+        
         if (!morseInput) return false;
         
         // Handle circular matching (wrap around)

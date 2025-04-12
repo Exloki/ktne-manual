@@ -1,5 +1,6 @@
 import './WiresModule.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { EasyModeContext } from '../components/EasyModeToggle';
 
 function WiresModule() {
     // State to track wires by color
@@ -20,6 +21,9 @@ function WiresModule() {
     // State to track which rules are highlighted
     const [highlightedRules, setHighlightedRules] = useState<string[]>([]);
     
+    // Get Easy Mode state from context
+    const isEasyMode = useContext(EasyModeContext);
+    
     // Calculate total wires
     const totalWires = wireSequence.length;
     
@@ -39,8 +43,8 @@ function WiresModule() {
     useEffect(() => {
         const newHighlightedRules: string[] = [];
         
-        // Only check rules if there are wires
-        if (totalWires > 0) {
+        // Only check rules if there are wires and Easy Mode is on
+        if (totalWires > 0 && isEasyMode) {
             // Check 3 WIRES rules
             if (totalWires === 3) {
                 if (wires.red === 0) {
@@ -103,7 +107,7 @@ function WiresModule() {
         }
         
         setHighlightedRules(newHighlightedRules);
-    }, [wires, totalWires, lastWireColor]);
+    }, [wires, totalWires, lastWireColor, isEasyMode]);
     
     return (
         <div>
@@ -116,7 +120,7 @@ function WiresModule() {
                     <tr>
                         <td>
                             <div className="wire-header">
-                                <h4 className={totalWires === 3 ? 'active-rule' : ''}>3 WIRES</h4>
+                                <h4 className={isEasyMode && totalWires === 3 ? 'active-rule' : ''}>3 WIRES</h4>
                             </div>
                             <ul>
                                 <li className={highlightedRules.includes('3-1') ? 'highlighted-rule' : ''}>0 <span className="red">red</span>: <b>2nd</b></li>
@@ -126,7 +130,7 @@ function WiresModule() {
                         </td>
                         <td>
                             <div className="wire-header">
-                                <h4 className={totalWires === 5 ? 'active-rule' : ''}>5 WIRES</h4>
+                                <h4 className={isEasyMode && totalWires === 5 ? 'active-rule' : ''}>5 WIRES</h4>
                             </div>
                             <ul>
                                 <li className={highlightedRules.includes('5-1') ? 'highlighted-rule' : ''}>last=black &amp; serial=odd: <b>4th</b></li>
@@ -139,7 +143,7 @@ function WiresModule() {
                     <tr>
                         <td>
                             <div className="wire-header">
-                                <h4 className={totalWires === 4 ? 'active-rule' : ''}>4 WIRES</h4>
+                                <h4 className={isEasyMode && totalWires === 4 ? 'active-rule' : ''}>4 WIRES</h4>
                             </div>
                             <ul>
                                 <li className={highlightedRules.includes('4-1') ? 'highlighted-rule' : ''}>&gt;1 <span className="red">red </span>&amp; serial=odd: <b>last red</b></li>
@@ -151,7 +155,7 @@ function WiresModule() {
                         </td>
                         <td>
                             <div className="wire-header">
-                                <h4 className={totalWires === 6 ? 'active-rule' : ''}>6 WIRES</h4>
+                                <h4 className={isEasyMode && totalWires === 6 ? 'active-rule' : ''}>6 WIRES</h4>
                             </div>
                             <ul>
                                 <li className={highlightedRules.includes('6-1') ? 'highlighted-rule' : ''}>0 <span className="yellow">yellow</span> &amp; serial=odd: <b>3rd</b></li>
