@@ -1,0 +1,129 @@
+.easy-mode-toggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Special Elite', 'Courier New', monospace;
+}
+
+.easy-mode-label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+/* Toggle Switch Styles */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+  background-color: #2196F3;
+}
+
+input:focus + .toggle-slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+/* Tooltip Styles */
+.tooltip {
+  position: absolute;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  width: 200px;
+  left: 105%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.easy-mode-toggle:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .easy-mode-toggle {
+    bottom: 10px;
+    left: 10px;
+    padding: 8px 12px;
+  }
+  
+  .easy-mode-label {
+    font-size: 12px;
+  }
+  
+  .toggle-switch {
+    width: 40px;
+    height: 20px;
+  }
+  
+  .toggle-slider:before {
+    height: 14px;
+    width: 14px;
+  }
+  
+  input:checked + .toggle-slider:before {
+    transform: translateX(20px);
+  }
+  
+  .tooltip {
+    width: 180px;
+    font-size: 10px;
+    left: 105%;
+  }
+} 
